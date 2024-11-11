@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Шифрування частоколу</title>
+  </head>
+  <body>
+    <div id="passwordModal" class="modal">
+      <div class="modal-content">
+        <h2>Введіть пароль</h2>
+        <input type="password" id="passwordInput" placeholder="Пароль" />
+        <button id="submitPassword">Увійти</button>
+        <p id="passwordError" class="error-message"></p>
+      </div>
+    </div>
+
+    <div class="container">
+      <h1>Шифрування частоколу</h1>
+      <!-- Вкладки для вибору між шифруванням і розшифруванням -->
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="encrypt">Зашифрувати</button>
+        <button class="tab-btn" data-tab="decrypt">Розшифрувати</button>
+      </div>
+
+      <div class="form-container">
+        <!-- Форма для шифрування -->
+        <div id="encrypt" class="tab-content active">
+          <label for="textInput">Введіть текст:</label>
+          <input type="text" id="textInput" />
+
+          <label for="numRows">Кількість рівнів:</label>
+          <input type="number" id="numRows" min="2" />
+
+          <p id="encryptError" class="error-message"></p>
+          <button id="encryptButton">Зашифрувати</button>
+        </div>
+
+        <!-- Форма для розшифрування -->
+        <div id="decrypt" class="tab-content">
+          <label for="cipherInput">Введіть зашифрований текст:</label>
+          <input type="text" id="cipherInput" />
+
+          <label for="numRowsDecrypt">Кількість рівнів:</label>
+          <input type="number" id="numRowsDecrypt" min="2" />
+
+          <p id="decryptError" class="error-message"></p>
+          <button id="decryptButton">Розшифрувати</button>
+        </div>
+      </div>
+      <div class="result">
+        <h2 class="result-header">Результат:</h2>
+        <div id="resultText"></div>
+      </div>
+    </div>
+
+    <div class="container">
+      <h1>Візуалізація частоколу</h1>
+      <div id="tableContainer"></div>
+    </div>
+
+    <script type="module" src="/src/renderer.js"></script>
+  </body>
+</html>
