@@ -5,25 +5,14 @@
     <title>Шифрування частоколу</title>
   </head>
   <body>
-    <div id="passwordModal" class="modal">
-      <div class="modal-content">
-        <h2>Введіть пароль</h2>
-        <input type="password" id="passwordInput" placeholder="Пароль" />
-        <button id="submitPassword">Увійти</button>
-        <p id="passwordError" class="error-message"></p>
-      </div>
-    </div>
-
     <div class="container">
       <h1>Шифрування частоколу</h1>
-      <!-- Вкладки для вибору між шифруванням і розшифруванням -->
       <div class="tabs">
         <button class="tab-btn active" data-tab="encrypt">Зашифрувати</button>
         <button class="tab-btn" data-tab="decrypt">Розшифрувати</button>
       </div>
 
       <div class="form-container">
-        <!-- Форма для шифрування -->
         <div id="encrypt" class="tab-content active">
           <label for="textInput">Введіть текст:</label>
           <input type="text" id="textInput" />
@@ -35,7 +24,6 @@
           <button id="encryptButton">Зашифрувати</button>
         </div>
 
-        <!-- Форма для розшифрування -->
         <div id="decrypt" class="tab-content">
           <label for="cipherInput">Введіть зашифрований текст:</label>
           <input type="text" id="cipherInput" />
@@ -56,6 +44,62 @@
     <div class="container">
       <h1>Візуалізація частоколу</h1>
       <div id="tableContainer"></div>
+    </div>
+
+    <div id="keyModal" class="modal">
+      <div class="modal-content">
+        <h2>Введіть ключ продукту</h2>
+        <input
+          type="text"
+          id="productKeyInput"
+          placeholder="XXXXX-XXXXX-XXXXX"
+        />
+        <button id="submitKey">Підтвердити</button>
+        <p id="keyError" class="error-message"></p>
+      </div>
+    </div>
+
+    <div id="passwordSetupModal" class="modal">
+      <div class="modal-content">
+        <h2>Створіть новий пароль</h2>
+        <div class="password-field">
+          <input
+            type="password"
+            id="newPasswordInput"
+            placeholder="Новий пароль"
+          />
+          <span class="toggle-password">👁️</span>
+        </div>
+        <button id="submitNewPassword">Зберегти</button>
+        <p id="newPasswordError" class="error-message"></p>
+      </div>
+    </div>
+
+    <div id="passwordModal" class="modal">
+      <div class="modal-content">
+        <h2>Введіть пароль</h2>
+        <div class="password-field">
+          <input type="password" id="passwordInput" placeholder="Пароль" />
+          <span class="toggle-password">👁️</span>
+        </div>
+        <button id="submitPassword">Увійти</button>
+        <p id="passwordError" class="error-message"></p>
+        <p id="forgotPassword" class="forgot-password">Забули пароль?</p>
+      </div>
+    </div>
+
+    <div id="forgotPasswordModal" class="modal">
+      <div class="modal-content">
+        <button id="backToPasswordModal" class="back-button">⬅ Назад</button>
+        <h2>Введіть ключ продукту для відновлення пароля</h2>
+        <input
+          type="text"
+          id="forgotProductKeyInput"
+          placeholder="XXXXX-XXXXX-XXXXX"
+        />
+        <button id="resetPassword">Підтвердити</button>
+        <p id="forgotPasswordError" class="error-message"></p>
+      </div>
     </div>
 
     <script type="module" src="/src/renderer.js"></script>

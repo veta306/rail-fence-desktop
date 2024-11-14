@@ -8,18 +8,106 @@ const decryptError = document.getElementById("decryptError");
 const resultText = document.getElementById("resultText");
 const tableContainer = document.getElementById("tableContainer");
 
-const passwordModal = document.getElementById("passwordModal");
-const passwordInput = document.getElementById("passwordInput");
-const passwordError = document.getElementById("passwordError");
-const submitPassword = document.getElementById("submitPassword");
+const productKeyPattern = /^[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}$/;
+const commonPasswords = [
+  "123456",
+  "password",
+  "12345678",
+  "1234",
+  "pussy",
+  "12345",
+  "dragon",
+  "qwerty",
+  "696969",
+  "mustang",
+  "letmein",
+  "seball",
+  "master",
+  "michael",
+  "football",
+  "shadow",
+  "monkey",
+  "abc123",
+  "pass",
+  "fuckme",
+  "6969",
+  "jordan",
+  "harley",
+  "ranger",
+  "iwantu",
+  "jennifer",
+  "hunter",
+  "fuck",
+  "2000",
+  "test",
+];
 
-passwordModal.style.display = "block";
+const keyModal = document.getElementById("keyModal");
+const passwordSetupModal = document.getElementById("passwordSetupModal");
+const passwordModal = document.getElementById("passwordModal");
+const forgotPasswordModal = document.getElementById("forgotPasswordModal");
+const productKeyInput = document.getElementById("productKeyInput");
+const newPasswordInput = document.getElementById("newPasswordInput");
+const passwordInput = document.getElementById("passwordInput");
+const forgotProductKeyInput = document.getElementById("forgotProductKeyInput");
+const keyError = document.getElementById("keyError");
+const newPasswordError = document.getElementById("newPasswordError");
+const passwordError = document.getElementById("passwordError");
+const forgotPasswordError = document.getElementById("forgotPasswordError");
+const submitPassword = document.getElementById("submitPassword");
+const togglePassword = document.querySelectorAll(".toggle-password");
+
+const storedKey = localStorage.getItem("productKey");
+const storedPassword = localStorage.getItem("password");
+
+if (!storedKey) {
+  openModal(keyModal);
+} else if (!storedPassword) {
+  openModal(passwordSetupModal);
+} else {
+  openModal(passwordModal);
+}
+
+function openModal(modal) {
+  modal.classList.add("active");
+}
+
+function closeModal(modal) {
+  modal.classList.remove("active");
+}
+
+document.getElementById("backToPasswordModal").addEventListener("click", () => {
+  closeModal(forgotPasswordModal);
+  openModal(passwordModal);
+});
+
+document.getElementById("submitKey").addEventListener("click", () => {
+  const productKey = productKeyInput.value.trim();
+  if (productKeyPattern.test(productKey)) {
+    localStorage.setItem("productKey", productKey);
+    closeModal(keyModal);
+    openModal(passwordSetupModal);
+  } else {
+    keyError.textContent = "Невірний формат ключа продукту!";
+  }
+});
+
+document.getElementById("submitNewPassword").addEventListener("click", () => {
+  const newPassword = newPasswordInput.value;
+  if (newPassword === "") return;
+  if (commonPasswords.includes(newPassword)) {
+    newPasswordError.textContent = "Пароль занадто поширений. Виберіть інший!";
+  } else {
+    localStorage.setItem("password", newPassword);
+    closeModal(passwordSetupModal);
+  }
+});
 
 submitPassword.addEventListener("click", () => {
   const password = passwordInput.value;
   if (password === "") return;
-  if (password === "secret") {
-    passwordModal.style.display = "none";
+  if (password === storedPassword) {
+    closeModal(passwordModal);
   } else {
     passwordInput.disabled = true;
     submitPassword.disabled = true;
@@ -30,6 +118,35 @@ submitPassword.addEventListener("click", () => {
     }, 5000);
   }
 });
+
+document.getElementById("resetPassword").addEventListener("click", () => {
+  const productKey = forgotProductKeyInput.value.trim();
+  if (productKey === storedKey) {
+    closeModal(forgotPasswordModal);
+    openModal(passwordSetupModal);
+  } else {
+    forgotPasswordError.textContent = "Неправильний ключ продукту!";
+  }
+});
+
+document.getElementById("forgotPassword").addEventListener("click", () => {
+  closeModal(passwordModal);
+  openModal(forgotPasswordModal);
+});
+
+togglePassword.forEach((button) =>
+  button.addEventListener("click", () => {
+    if (button.textContent == "👁️") {
+      button.textContent = "🙈";
+      passwordInput.type = "text";
+      newPasswordInput.type = "text";
+    } else {
+      button.textContent = "👁️";
+      passwordInput.type = "password";
+      newPasswordInput.type = "password";
+    }
+  })
+);
 
 tabButtons.forEach((button) => {
   button.addEventListener("click", () => {
